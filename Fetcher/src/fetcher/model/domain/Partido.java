@@ -97,7 +97,7 @@ public class Partido implements Serializable {
 
     @Override
     public String toString() {
-        return "fetcher.model.domain.Partido[ id=" + id + " ]";
+        return "fetcher.model.domain.Partido[ id = " + id + "; sigla = " + sigla + "]";
     }
     
 }
