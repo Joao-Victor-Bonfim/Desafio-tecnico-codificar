@@ -24,8 +24,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "VerbasIdenizatorias.findAll", query = "SELECT v FROM VerbasIdenizatorias v")
-    , @NamedQuery(name = "VerbasIdenizatorias.findByIdDeputado", query = "SELECT v FROM VerbasIdenizatorias v WHERE v.verbasIdenizatoriasPK.idDeputado = :idDeputado")
-    , @NamedQuery(name = "VerbasIdenizatorias.findByIdDespesa", query = "SELECT v FROM VerbasIdenizatorias v WHERE v.verbasIdenizatoriasPK.idDespesa = :idDespesa")
+    , @NamedQuery(name = "VerbasIdenizatorias.findByDeputado", query = "SELECT v FROM VerbasIdenizatorias v WHERE v.verbasIdenizatoriasPK.idDeputado = :Deputado")
+    , @NamedQuery(name = "VerbasIdenizatorias.findByDespesa", query = "SELECT v FROM VerbasIdenizatorias v WHERE v.verbasIdenizatoriasPK.idDespesa = :Despesa")
     , @NamedQuery(name = "VerbasIdenizatorias.findByValor", query = "SELECT v FROM VerbasIdenizatorias v WHERE v.valor = :valor")
     , @NamedQuery(name = "VerbasIdenizatorias.findByData", query = "SELECT v FROM VerbasIdenizatorias v WHERE v.data = :data")})
 public class VerbasIdenizatorias implements Serializable {
@@ -118,10 +118,7 @@ public class VerbasIdenizatorias implements Serializable {
             return false;
         }
         VerbasIdenizatorias other = (VerbasIdenizatorias) object;
-        if ((this.verbasIdenizatoriasPK == null && other.verbasIdenizatoriasPK != null) || (this.verbasIdenizatoriasPK != null && !this.verbasIdenizatoriasPK.equals(other.verbasIdenizatoriasPK))) {
-            return false;
-        }
-        return true;
+        return !((this.verbasIdenizatoriasPK == null && other.verbasIdenizatoriasPK != null) || (this.verbasIdenizatoriasPK != null && !this.verbasIdenizatoriasPK.equals(other.verbasIdenizatoriasPK)));
     }
 
     @Override

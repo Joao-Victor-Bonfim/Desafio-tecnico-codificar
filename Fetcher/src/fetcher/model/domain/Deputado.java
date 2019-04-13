@@ -30,8 +30,6 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Deputado.findAll", query = "SELECT d FROM Deputado d")
     , @NamedQuery(name = "Deputado.findByApelido", query = "SELECT d FROM Deputado d WHERE d.apelido = :apelido")
     , @NamedQuery(name = "Deputado.findByNome", query = "SELECT d FROM Deputado d WHERE d.nome = :nome")
-    , @NamedQuery(name = "Deputado.findByEndereco", query = "SELECT d FROM Deputado d WHERE d.endereco = :endereco")
-    , @NamedQuery(name = "Deputado.findByNascimento", query = "SELECT d FROM Deputado d WHERE d.nascimento = :nascimento")
     , @NamedQuery(name = "Deputado.findById", query = "SELECT d FROM Deputado d WHERE d.id = :id")})
 public class Deputado implements Serializable {
 
@@ -161,7 +159,7 @@ public class Deputado implements Serializable {
 
     @Override
     public String toString() {
-        return "fetcher.model.domain.Deputado_1[ id=" + id + " ]";
+        return "fetcher.model.domain.Deputado[ id=" + id + "; nome=" + nome + "; apelido=" + apelido + "; endereço=" + endereco + "; nascimento=" + nascimento + "; partido=" + partido + " ]";
     }
     
 }

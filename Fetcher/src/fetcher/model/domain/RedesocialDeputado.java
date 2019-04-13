@@ -21,8 +21,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "RedesocialDeputado.findAll", query = "SELECT r FROM RedesocialDeputado r")
-    , @NamedQuery(name = "RedesocialDeputado.findByIdDeputado", query = "SELECT r FROM RedesocialDeputado r WHERE r.redesocialDeputadoPK.idDeputado = :idDeputado")
-    , @NamedQuery(name = "RedesocialDeputado.findByIdRedesocial", query = "SELECT r FROM RedesocialDeputado r WHERE r.redesocialDeputadoPK.idRedesocial = :idRedesocial")
+    , @NamedQuery(name = "RedesocialDeputado.findByDeputado", query = "SELECT r FROM RedesocialDeputado r WHERE r.redesocialDeputadoPK.idDeputado = :idDeputado")
+    , @NamedQuery(name = "RedesocialDeputado.findByRedeSocial", query = "SELECT r FROM RedesocialDeputado r WHERE r.redesocialDeputadoPK.idRedesocial = :idRedeSocial")
     , @NamedQuery(name = "RedesocialDeputado.findByUrl", query = "SELECT r FROM RedesocialDeputado r WHERE r.url = :url")})
 public class RedesocialDeputado implements Serializable {
 
@@ -101,10 +101,7 @@ public class RedesocialDeputado implements Serializable {
             return false;
         }
         RedesocialDeputado other = (RedesocialDeputado) object;
-        if ((this.redesocialDeputadoPK == null && other.redesocialDeputadoPK != null) || (this.redesocialDeputadoPK != null && !this.redesocialDeputadoPK.equals(other.redesocialDeputadoPK))) {
-            return false;
-        }
-        return true;
+        return !((this.redesocialDeputadoPK == null && other.redesocialDeputadoPK != null) || (this.redesocialDeputadoPK != null && !this.redesocialDeputadoPK.equals(other.redesocialDeputadoPK)));
     }
 
     @Override

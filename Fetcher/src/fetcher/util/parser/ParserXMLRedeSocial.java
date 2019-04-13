@@ -1,6 +1,6 @@
 package fetcher.util.parser;
 
-import fetcher.model.domain.Partido;
+import fetcher.model.domain.RedeSocial;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,11 +14,12 @@ import javax.xml.stream.events.XMLEvent;
  *
  * @author João Victor
  */
-public class ParserXMLPartido implements ParserGenerico<Partido>{
+public class ParserXMLRedeSocial implements ParserGenerico<RedeSocial>{
     
-    public static final String PARTIDO = "partido";
+    public static final String REDESOCIAL = "redesocial";
     public static final String ID = "id";
-    public static final String SIGLA = "sigla";
+    public static final String NOME = "nome";
+    public static final String URL = "url";
     
     /**
      *
@@ -27,11 +28,11 @@ public class ParserXMLPartido implements ParserGenerico<Partido>{
      * forma de objetos.
      */
     @Override
-    public List<Partido> parse(InputStream origem) {
+    public List<RedeSocial> parse(InputStream origem) {
         
-        List<Partido> retorno = new ArrayList<>();
+        List<RedeSocial> retorno = new ArrayList<>();
         XMLEventReader leitorDeEventos;
-        Partido item = new Partido();
+        RedeSocial item = new RedeSocial();
         XMLEvent evento;
         StartElement elementoInicial;
         
@@ -41,10 +42,9 @@ public class ParserXMLPartido implements ParserGenerico<Partido>{
                 evento = leitorDeEventos.nextEvent();
 
                 if (evento.isStartElement()) {
-                    
                     elementoInicial = evento.asStartElement();
-                    if (elementoInicial.getName().getLocalPart().equals(PARTIDO)) {
-                        item = new Partido();
+                    if (elementoInicial.getName().getLocalPart().equals(REDESOCIAL)) {
+                        item = new RedeSocial();
                     }
                     
                     if (elementoInicial.getName().getLocalPart().equals(ID)) {
@@ -53,23 +53,29 @@ public class ParserXMLPartido implements ParserGenerico<Partido>{
                         continue;
                     }
                     
-                    if (elementoInicial.getName().getLocalPart().equals(SIGLA)) {
-                        item.setSigla(leitorDeEventos.nextEvent()
+                    if (elementoInicial.getName().getLocalPart().equals(NOME)) {
+                        item.setNome(leitorDeEventos.nextEvent()
+                                .asCharacters().getData());
+                        continue;
+                    }
+                    
+                    if (elementoInicial.getName().getLocalPart().equals(URL)) {
+                        item.setUrl(leitorDeEventos.nextEvent()
                                 .asCharacters().getData());
                         continue;
                     }
                 }
                 
                 if (evento.isEndElement()) {
-                    if (evento.asEndElement().
-                            getName().getLocalPart().equals(PARTIDO)) {
+                    if (evento.asEndElement()
+                            .getName().getLocalPart().equals(REDESOCIAL)) {
                         retorno.add(item);
                     }
                 }
 
             }
         } catch (XMLStreamException e) {
-            System.err.println("Exceção em ParserXMLPartido:" + System.lineSeparator() + e);
+            System.err.println("Exceção em ParserXMLRedeSocial:" + System.lineSeparator() + e);
         }
         return retorno;
     }

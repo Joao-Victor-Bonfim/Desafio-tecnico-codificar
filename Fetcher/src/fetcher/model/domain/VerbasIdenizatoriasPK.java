@@ -58,13 +58,7 @@ public class VerbasIdenizatoriasPK implements Serializable {
             return false;
         }
         VerbasIdenizatoriasPK other = (VerbasIdenizatoriasPK) object;
-        if (this.idDeputado != other.idDeputado) {
-            return false;
-        }
-        if (this.idDespesa != other.idDespesa) {
-            return false;
-        }
-        return true;
+        return this.idDeputado == other.idDeputado && this.idDespesa == other.idDespesa;
     }
 
     @Override

@@ -102,15 +102,12 @@ public class RedeSocial implements Serializable {
             return false;
         }
         RedeSocial other = (RedeSocial) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
+        return !((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)));
     }
 
     @Override
     public String toString() {
-        return "fetcher.model.domain.RedeSocial[ id=" + id + " ]";
+        return "fetcher.model.domain.RedeSocial[ id=" + id + "; nome=" + nome + "; URL=" + url + " ]";
     }
     
 }

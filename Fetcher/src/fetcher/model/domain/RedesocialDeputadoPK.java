@@ -58,13 +58,7 @@ public class RedesocialDeputadoPK implements Serializable {
             return false;
         }
         RedesocialDeputadoPK other = (RedesocialDeputadoPK) object;
-        if (this.idDeputado != other.idDeputado) {
-            return false;
-        }
-        if (this.idRedesocial != other.idRedesocial) {
-            return false;
-        }
-        return true;
+        return this.idDeputado == other.idDeputado && this.idRedesocial == other.idRedesocial;
     }
 
     @Override

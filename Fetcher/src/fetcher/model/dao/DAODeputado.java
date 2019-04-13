@@ -1,7 +1,7 @@
 package fetcher.model.dao;
 
 import fetcher.model.domain.Deputado;
-import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.PersistenceException;
 
 /**
@@ -10,11 +10,17 @@ import javax.persistence.PersistenceException;
  */
 public interface DAODeputado {
     
-    public ArrayList<Deputado> listarTodos() throws PersistenceException;
+    public List<Deputado> listarTodos() throws PersistenceException;
+    
+    public List<Deputado> procurarPorNome(String nome) throws PersistenceException;
+    
+    public List<Deputado> procurarPorId(Integer id) throws PersistenceException;
+    
+    public List<Deputado> procurarPorApelido(String apelido) throws PersistenceException;
     
     public void inserir(Deputado novo) throws PersistenceException;
     
-    public void deletar(Integer id) throws PersistenceException;
+    public void deletar(Deputado remover) throws PersistenceException;
     
-    public void atualizar(Integer id, Deputado novo) throws PersistenceException;
+    public void atualizar(Deputado atualizado) throws PersistenceException;
 }

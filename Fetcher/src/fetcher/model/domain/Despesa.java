@@ -23,8 +23,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Despesa.findAll", query = "SELECT d FROM Despesa d")
-    , @NamedQuery(name = "Despesa.findById", query = "SELECT d FROM Despesa d WHERE d.id = :id")
-    , @NamedQuery(name = "Despesa.findByDescricao", query = "SELECT d FROM Despesa d WHERE d.descricao = :descricao")})
+    , @NamedQuery(name = "Despesa.findById", query = "SELECT d FROM Despesa d WHERE d.id = :id")})
 public class Despesa implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -89,10 +88,7 @@ public class Despesa implements Serializable {
             return false;
         }
         Despesa other = (Despesa) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
+        return !((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)));
     }
 
     @Override
