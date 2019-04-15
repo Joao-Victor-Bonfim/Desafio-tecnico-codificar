@@ -1,6 +1,7 @@
-package fetcher.util.parser;
+package fetcher.util.parser.xml;
 
 import fetcher.model.domain.Partido;
+import fetcher.util.parser.ParserGenerico;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,17 +15,18 @@ import javax.xml.stream.events.XMLEvent;
  *
  * @author João Victor
  */
-public class ParserXMLPartido implements ParserGenerico<Partido>{
+public class ParserPartido implements ParserGenerico<Partido> {
     
     public static final String PARTIDO = "partido";
     public static final String ID = "id";
     public static final String SIGLA = "sigla";
     
     /**
-     *
-     * @param origem InputStream de onde virá o XML que sofrerá parse. 
-     * @return Uma lista contendo todos os partidos encontrados em origem na
-     * forma de objetos.
+     *  Função que transforma um texto XML em uma lista de objetos
+     * <code>Partido</code>.
+     * @param origem Texto JSON que sofrerá parse. 
+     * @return Uma lista contendo todos os partidos em <code>original</code>
+     * na forma de objetos <code>Partido</code>.
      */
     @Override
     public List<Partido> parse(InputStream origem) {
@@ -36,7 +38,9 @@ public class ParserXMLPartido implements ParserGenerico<Partido>{
         StartElement elementoInicial;
         
         try {
-            leitorDeEventos = XMLInputFactory.newInstance().createXMLEventReader(origem);
+            leitorDeEventos = XMLInputFactory.newInstance()
+                    .createXMLEventReader(origem);
+            
             while (leitorDeEventos.hasNext()) {
                 evento = leitorDeEventos.nextEvent();
 
@@ -68,10 +72,9 @@ public class ParserXMLPartido implements ParserGenerico<Partido>{
                 }
 
             }
-        } catch (XMLStreamException e) {
-            System.err.println("Exceção em ParserXMLPartido:" + System.lineSeparator() + e);
+        } catch (XMLStreamException | RuntimeException e) {
+            throw new RuntimeException("Exceção em " + this.getClass().getName() + ":" + System.lineSeparator() + e);
         }
         return retorno;
     }
-    
 }

@@ -10,7 +10,15 @@ import javax.persistence.PersistenceException;
 
 
 public class DAOIRedesocialDeputado implements DAORedesocialDeputado {
-
+    
+    private static final DAOIRedesocialDeputado DAOIRedesocialDeputado = new DAOIRedesocialDeputado();
+    
+    private DAOIRedesocialDeputado(){}
+    
+    public static DAOIRedesocialDeputado getInstance() {
+        return DAOIRedesocialDeputado;
+    }
+    
     @Override
     public List<RedesocialDeputado> listarTodos() throws PersistenceException {
         return Persistence.createEntityManagerFactory("FetcherPU")

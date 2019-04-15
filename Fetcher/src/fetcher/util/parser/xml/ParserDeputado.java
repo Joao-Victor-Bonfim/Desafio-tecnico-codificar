@@ -1,17 +1,18 @@
-package fetcher.util.parser;
+package fetcher.util.parser.xml;
 
 import fetcher.model.daoimpl.DAOIPartido;
 import fetcher.model.domain.Deputado;
 import fetcher.model.domain.Partido;
+import fetcher.util.parser.ParserGenerico;
 import java.io.InputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.PersistenceException;
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.events.EndElement;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 
@@ -19,7 +20,7 @@ import javax.xml.stream.events.XMLEvent;
  *
  * @author João Victor
  */
-public class ParserXMLDeputado implements ParserGenerico<Deputado>{
+public class ParserDeputado implements ParserGenerico<Deputado>{
     public static final String DEPUTADO = "contato";
     public static final String ID = "id";
     public static final String NOME = "nomeServidor";
@@ -27,12 +28,15 @@ public class ParserXMLDeputado implements ParserGenerico<Deputado>{
     public static final String ENDERECO = "endereco";
     public static final String NASCIMENTO = "dataNascimento";
     public static final String PARTIDO = "partido";
+    public static final String REDESOCIAL = "redesSociais";
     
     /**
-     *
-     * @param origem InputStream de onde virá o XML que sofrerá parse. 
-     * @return Uma lista contendo todos os partidos encontrados em origem na
-     * forma de objetos.
+     *  Função que transforma um texto XML em uma lista de objetos
+     * <code>Deputado</code>.
+     * @param origem <code>InputStream</code> que fornecerá o arquivo XML que
+     * será parseado.
+     * @return Uma lista contendo todos os deputados em <code>origem</code>
+     * na forma de objetos <code>Deputado</code>.
      */
     @Override
     public List<Deputado> parse(InputStream origem) {
@@ -42,9 +46,11 @@ public class ParserXMLDeputado implements ParserGenerico<Deputado>{
         Deputado item = new Deputado();
         XMLEvent evento;
         StartElement elementoInicial;
+        EndElement elementoFinal;
         
         try {
-            leitorDeEventos = XMLInputFactory.newInstance().createXMLEventReader(origem);
+            leitorDeEventos = XMLInputFactory.newInstance()
+                    .createXMLEventReader(origem);
             while (leitorDeEventos.hasNext()) {
                 evento = leitorDeEventos.nextEvent();
 
@@ -79,34 +85,35 @@ public class ParserXMLDeputado implements ParserGenerico<Deputado>{
                     }
                     
                     if (elementoInicial.getName().getLocalPart().equals(NASCIMENTO)) {
-                        item.setNascimento(new SimpleDateFormat().parse(leitorDeEventos.nextEvent()
-                                .asCharacters().getData()));
+                        item.setNascimento(new SimpleDateFormat("dd/MM/yyyy")
+                                .parse(leitorDeEventos.nextEvent().asCharacters().getData()));
                         continue;
                     }
                     
                     if (elementoInicial.getName().getLocalPart().equals(PARTIDO)) {
                         List<Partido> partido = DAOIPartido.getInstance().pesquisarPorSigla(leitorDeEventos.nextEvent().asCharacters().getData());
-                        
-                        if(partido.size() > 1)
-                            throw new PersistenceException("Não podem existir mais de um partido com a mesma sigla." + System.lineSeparator() + "Por favor informe isto ao administrador do sistema.");
                         if(partido.isEmpty())
-                            throw new PersistenceException("O partido dado não existe." + System.lineSeparator() + "Por favor informe isto ao administrador do sistema.");
+                            throw new RuntimeException("O partido do Deputado não existe!");
                         
                         item.setPartido(partido.get(0));
                         continue;
                     }
+                    
+                    if (elementoInicial.getName().getLocalPart().equals(REDESOCIAL)) {
+                        item.setRedesocialDeputadoList(new ParserRedeSocialDeputado().parse(origem));
+                    }
                 }
                 
                 if (evento.isEndElement()) {
-                    if (evento.asEndElement()
-                            .getName().getLocalPart().equals(DEPUTADO)) {
+                    elementoFinal = evento.asEndElement();
+                    if (elementoFinal.getName().getLocalPart().equals(DEPUTADO)) {
                         retorno.add(item);
                     }
                 }
 
             }
-        } catch (XMLStreamException | ParseException e) {
-            System.err.println("Exceção em ParserXMLDeputado:" + System.lineSeparator() + e);
+        } catch (XMLStreamException | ParseException | RuntimeException e) {
+            throw new RuntimeException("Exceção em " + this.getClass().getName() + ":" + System.lineSeparator() + e);
         }
         
         return retorno;

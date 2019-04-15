@@ -11,6 +11,14 @@ import javax.persistence.PersistenceException;
 
 
 public class DAOIVerbasIdenizatorias implements DAOVerbasIdenizatorias {
+    
+    private static final DAOIVerbasIdenizatorias DAOIVerbasIdenizatorias = new DAOIVerbasIdenizatorias();
+    
+    private DAOIVerbasIdenizatorias(){}
+    
+    public static DAOIVerbasIdenizatorias getInstance() {
+        return DAOIVerbasIdenizatorias;
+    }
 
     @Override
     public List<VerbasIdenizatorias> listarTodos() throws PersistenceException {

@@ -2,6 +2,7 @@ package fetcher.model.daoimpl;
 
 import fetcher.model.dao.DAOPartido;
 import fetcher.model.domain.Partido;
+import fetcher.util.exception.BusinessException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -30,12 +31,22 @@ public class DAOIPartido implements DAOPartido {
 
     @Override
     public List<Partido> pesquisarPorSigla(String sigla) throws PersistenceException {
-        return sigla == null ? new ArrayList<>():
-            Persistence.createEntityManagerFactory("FetcherPU")
-            .createEntityManager()
-            .createNamedQuery("Partido.findBySigla")
-            .setParameter("sigla", sigla)
-            .getResultList();
+        if(sigla == null)
+            return new ArrayList<>();
+        else {
+            List<Partido> resultado = Persistence.createEntityManagerFactory("FetcherPU")
+                                .createEntityManager()
+                                .createNamedQuery("Partido.findBySigla")
+                                .setParameter("sigla", sigla)
+                                .getResultList();
+            
+            int tam = resultado.size();
+            
+            if(tam != 1 && tam != 0)
+                throw new BusinessException("Não pode existir mais de um partido com a mesma sigla.");
+            
+            return resultado;
+        }
     }
 
     @Override
