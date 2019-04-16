@@ -2,6 +2,7 @@ package fetcher.model.daoimpl;
 
 import fetcher.model.dao.DAODespesa;
 import fetcher.model.domain.Despesa;
+import fetcher.util.exception.BusinessException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -30,12 +31,18 @@ public class DAOIDespesa implements DAODespesa {
 
     @Override
     public List<Despesa> procurarPorId(Integer id) throws PersistenceException {
-        return id == null ? new ArrayList<>():
-            Persistence.createEntityManagerFactory("FetcherPU")
-            .createEntityManager()
-            .createNamedQuery("Despesa.findById")
-            .setParameter("id", id)
-            .getResultList();
+        if(id == null)
+            return new ArrayList<>();
+        List<Despesa> resultado = (List<Despesa>) Persistence
+                                    .createEntityManagerFactory("FetcherPU")
+                                    .createEntityManager()
+                                    .createNamedQuery("Despesa.findById")
+                                    .setParameter("id", id)
+                                    .getResultList();
+        if(!resultado.isEmpty() && resultado.size() != 1)
+            throw new BusinessException("Não podem existir mais de uma despesa com mesmo id.");
+        return resultado;
+            
     }
 
     @Override

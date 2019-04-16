@@ -1,6 +1,5 @@
 package fetcher.util.parser.xml;
 
-import fetcher.model.domain.Deputado;
 import fetcher.model.domain.RedeSocial;
 import fetcher.model.domain.RedesocialDeputado;
 import fetcher.util.parser.ParserGenerico;

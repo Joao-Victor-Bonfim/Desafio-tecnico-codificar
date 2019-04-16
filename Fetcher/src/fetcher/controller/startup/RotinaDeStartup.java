@@ -10,6 +10,7 @@ import fetcher.model.domain.Despesa;
 import fetcher.model.domain.Partido;
 import fetcher.model.domain.RedeSocial;
 import fetcher.model.domain.VerbasIdenizatorias;
+import fetcher.util.parser.xml.ParserDeputado;
 import fetcher.util.parser.xml.ParserDespesa;
 import fetcher.util.parser.xml.ParserPartido;
 import fetcher.util.parser.xml.ParserRedeSocial;
@@ -34,6 +35,7 @@ public class RotinaDeStartup {
     private static final String ENDREDESSOCIAIS = "";
     private static final String ENDDESPESAS = "";
     private static final String ENDVERBAS = "http://dadosabertos.almg.gov.br/ws/prestacao_contas/verbas_indenizatorias/legislatura_atual/deputados/";
+    private static final String ENDDEPUTADOS = "http://dadosabertos.almg.gov.br/ws/deputados/lista_telefonica";
 
     private RotinaDeStartup() {}
     
@@ -41,8 +43,8 @@ public class RotinaDeStartup {
         loadPartidos();
         loadRedesSociais();
         loadDespesas();
-        loadDeputados();
         loadVerbasIdenizatorias();
+        loadDeputados();
     }
     
     private static void loadPartidos() {
@@ -196,6 +198,36 @@ public class RotinaDeStartup {
     }
     
     private static void loadDeputados() {
-        
+        try {
+            URL url = new URL(ENDDEPUTADOS);
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            con.setRequestMethod("GET");
+            con.setRequestProperty("Accept", "application/XML");
+            
+            if (con.getResponseCode() != 200) {
+                throw new RuntimeException("Falhou!" + System.lineSeparator()
+                            + "Código de erro HTTP:" + System.lineSeparator()
+                            + con.getResponseCode());
+            }
+            
+            ParserDeputado parser = new ParserDeputado();
+            List<Deputado> deputados = parser.parse(con.getInputStream());
+            Iterator<Deputado> I = deputados.iterator();
+            
+            while(I.hasNext()) {
+                Deputado item = I.next();
+                try {
+                    DAOIDeputado.getInstance().inserir(item);
+                } catch (EntityExistsException e) {
+                    DAOIDeputado.getInstance().atualizar(item);
+                }
+            }
+            
+            con.disconnect();
+            
+        } catch (IOException | RuntimeException e) {
+            throw new RuntimeException("Exceção em RotinaDeStartup:" + System.lineSeparator()
+                                        + e);
+        }
     }
 }
