@@ -1,0 +1,42 @@
+<despesas>
+    <despesa>
+        <id>31</id>
+        <descricao>Locação de imóvel e despesas a ele concernentes</descricao>
+    </despesa>
+    <despesa>
+        <id>32</id>
+        <descricao>Combustível e lubrificante</descricao>
+    </despesa>
+    <despesa>
+        <id>33</id>
+        <descricao>Manutenção e despesas gerais com veículos</descricao>
+    </despesa>
+    <despesa>
+        <id>34</id>
+        <descricao>Locação e fretamento de veículos</descricao>
+    </despesa>
+    <despesa>
+        <id>35</id>
+        <descricao>Serviços de consultoria, assessoria e pesquisa</descricao>
+    </despesa>
+    <despesa>
+        <id>36</id>
+        <descricao>Divulgação da atividade parlamentar</descricao>
+    </despesa>
+    <despesa>
+        <id>37</id>
+        <descricao>Material de expediente e informática e locação de móveis e equipamentos para escritório</descricao>
+    </despesa>
+    <despesa>
+        <id>38</id>
+        <descricao>Passagens, hospedagem e alimentação</descricao>
+    </despesa>
+    <despesa>
+        <id>39</id>
+        <descricao>Assinatura de publicações, periódicos e "clippings"</descricao>
+    </despesa>
+    <despesa>
+        <id>40</id>
+        <descricao>Promoção e participação em eventos</descricao>
+    </despesa>
+</despesas>

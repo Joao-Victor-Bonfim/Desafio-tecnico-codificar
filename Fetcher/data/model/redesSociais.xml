@@ -1,0 +1,37 @@
+<redesSociais>
+    <redeSocial>
+        <id>0</id>
+        <nome>Facebook</nome>
+        <url>http://www.facebook.com</url>
+    </redeSocial>
+    <redeSocial>
+        <id>1</id>
+        <nome>Twitter</nome>
+        <url>http://twitter.com</url>
+    </redeSocial>
+    <redeSocial>
+        <id>3</id>
+        <nome>Youtube</nome>
+        <url>http://www.youtube.com</url>
+    </redeSocial>
+    <redeSocial>
+        <id>5</id>
+        <nome>Flickr</nome>
+        <url>http://www.flickr.com</url>
+    </redeSocial>
+    <redeSocial>
+        <id>6</id>
+        <nome>LinkedIn</nome>
+        <url>http://br.linkedin.com</url>
+    </redeSocial>
+    <redeSocial>
+        <id>18</id>
+        <nome>SoundCloud</nome>
+        <url>http://soundcloud.com</url>
+    </redeSocial>
+    <redeSocial>
+        <id>19</id>
+        <nome>Instagram</nome>
+        <url>http://instagram.com</url>
+    </redeSocial>
+</redesSociais>

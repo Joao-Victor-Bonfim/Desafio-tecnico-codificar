@@ -16,7 +16,7 @@ import javax.xml.stream.events.XMLEvent;
  * @author João Victor
  */
 public class ParserRedeSocial implements ParserGenerico<RedeSocial>{
-    public static final String REDESOCIAL = "redesocial";
+    public static final String REDESOCIAL = "redeSocial";
     public static final String ID = "id";
     public static final String NOME = "nome";
     public static final String URL = "url";

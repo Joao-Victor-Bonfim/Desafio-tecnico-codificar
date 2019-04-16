@@ -32,8 +32,8 @@ import javax.persistence.EntityExistsException;
 public class RotinaDeStartup {
     
     private static final String ENDPARTIDOS = "http://dadosabertos.almg.gov.br/ws/representacao_partidaria/partidos";
-    private static final String ENDREDESSOCIAIS = "";
-    private static final String ENDDESPESAS = "";
+    private static final String ENDREDESSOCIAIS = "./data/model/redesSociais.xml";
+    private static final String ENDDESPESAS = "./data/model/despesas.xml";
     private static final String ENDVERBAS = "http://dadosabertos.almg.gov.br/ws/prestacao_contas/verbas_indenizatorias/legislatura_atual/deputados/";
     private static final String ENDDEPUTADOS = "http://dadosabertos.almg.gov.br/ws/deputados/lista_telefonica";
 
